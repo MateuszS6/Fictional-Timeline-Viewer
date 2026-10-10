@@ -6,7 +6,9 @@ export function formatUniverseLabel(
 ): string {
     const universe = universes.find((item) => item.id === universeId);
 
-    if (!universe) return "Universe #" + universeId;
+    if (!universe) return `Universe #${universeId}`;
 
-    return universe.code ?? universe.name;
+    return universe.code?.trim() ||
+        universe.name.trim() ||
+        `Universe #${universeId}`;
 }

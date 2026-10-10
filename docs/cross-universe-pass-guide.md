@@ -1,8 +1,8 @@
-# Cross-universe management: implementation guide
+# Cross-universe management: historical implementation guide
 
-Prepared against the current Fictional-Media-Timeline-Viewer checkout. These are instructions for you to apply; the application source and live database have not been changed. Work through one numbered stage at a time.
+Historical instructions prepared on 8 October 2026. The user has since implemented a modified version. Keep new implementation steps in chat; use the current source and development plan for current behaviour. Do not reapply this guide wholesale.
 
-The current code and the complete proposed TypeScript changes pass lint and both TypeScript checks. The proposed source was checked using temporary copies; the application files remain unchanged. The SQL has not been executed against Supabase and must be applied and verified there.
+The original proposed source was checked using temporary copies. The 9 October review also checked the current user implementation with lint and both TypeScript configurations. Supabase metadata has not been inspected directly; the user-maintained snapshots now live under docs/supabase and need the verification described in the development plan.
 
 Keep these rules throughout:
 
@@ -371,7 +371,7 @@ description = `Manage characters and their visibility on ${universeName}`;
 
 ## 3. Show character origins on the timeline
 
-Every row gets a small origin label; visitors get a different label colour and explicit “From” wording. Names and character IDs stay unchanged. Two different-universe variants can therefore share a display name and still be distinguishable. Same-origin variants may still need a short alias qualifier for now; an alias plus origin is not a universal definition of a variant. No uniqueness constraint is changed in this pass.
+Historical proposal below: the current implementation instead shows compact labels for visitors only. Follow the project convention that variants are versions from different universes; no same-origin variant system is planned. The next pass will replace timeline Hide controls with origin navigation. Do not infer changes to live uniqueness constraints from this historical example.
 
 Add these two imports.
 

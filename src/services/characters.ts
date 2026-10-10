@@ -12,7 +12,8 @@ export async function getCharactersByIds(
         .from("characters")
         .select("*")
         .in("id", characterIds)
-        .order("alias");
+        .order("alias")
+        .order("id");
 
     if (error) throw error;
 

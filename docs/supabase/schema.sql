@@ -1,3 +1,7 @@
+-- Reference snapshot, not an automatically applied migration.
+-- Selected constraints/nullability reconciled with user-supplied live results
+-- on 10 October 2026. Policies, indexes and other metadata are not fully exported.
+
 create table
     franchises (
         id bigint generated always as identity primary key,
@@ -16,18 +20,21 @@ create table
 create table
     projects (
         id bigint generated always as identity primary key,
-        title text not null,
+        title text not null constraint projects_title_key unique,
         release_date date,
-        primary_universe_id bigint references universes (id) on delete restrict
+        primary_universe_id bigint not null references universes (id) on delete restrict
     );
 
 create table
     universe_projects (
         universe_id bigint not null references universes (id) on delete restrict,
-        project_id bigint not null references projects (id) on delete cascade,
-        timeline_position integer not null check (timeline_position > 0),
+        project_id bigint not null constraint timeline_projects_project_id_fkey
+            references projects (id) on delete cascade,
+        timeline_position integer not null constraint timeline_projects_position_check
+            check (timeline_position > 0),
         primary key (universe_id, project_id),
-        unique (universe_id, timeline_position)
+        constraint universe_projects_position_key
+            unique (universe_id, timeline_position) deferrable initially immediate
     );
 
 create table
@@ -35,7 +42,7 @@ create table
         id bigint generated always as identity primary key,
         alias text not null,
         real_name text,
-        origin_universe_id bigint references universes (id) on delete restrict
+        origin_universe_id bigint not null references universes (id) on delete restrict
     );
 
 create table
@@ -65,3 +72,4 @@ create table
         event_position text not null default 'at' check (event_position in ('at', 'after')),
         unique (character_id, project_id)
     );
+

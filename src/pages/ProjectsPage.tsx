@@ -199,7 +199,7 @@ export default function ProjectsPage({
         if (changingRef.current || editor !== null) return;
 
         const confirmed = window.confirm(
-            `Remove "${project.title} from this timeline?\n\n` +
+            `Remove "${project.title}" from this timeline?\n\n` +
             "The project, appearances and events stay saved. " +
             "Other timelines are unchanged. You can add the project again later."
         );
